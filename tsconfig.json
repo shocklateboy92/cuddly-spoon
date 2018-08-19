@@ -3,6 +3,9 @@
         "strict": true,
         "target": "esnext",
         "moduleResolution": "node",
-        "outDir": "dist/main.js"
+        // "outFile": "dist/main.js",
+        "outDir": "dist",
+        "allowSyntheticDefaultImports": true,
+        "module": "commonjs"
     }
 }
