@@ -1,0 +1,9 @@
+{
+  "name": "cuddly-spoon",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/github:shocklateboy92/cuddly-spoon",
+  "author": "Lasath Fernando <devel@lasath.org>",
+  "license": "MIT",
+  "private": true
+}
