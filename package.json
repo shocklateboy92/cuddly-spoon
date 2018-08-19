@@ -9,5 +9,10 @@
   "dependencies": {
     "@types/express": "^4.16.0",
     "express": "^4.16.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "run": "node ./dist/main.js"
   }
 }
