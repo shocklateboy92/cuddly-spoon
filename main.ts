@@ -1,8 +1,11 @@
 import * as express from "express";
 import * as net from "net";
+import * as https from "https";
+import * as fs from "fs";
 
 const PORT = 55381;
-const DEFAULT_VOLUME = 30;
+const CERT_PATH = `${process.env.HOME}/.certs`;
+const ENCODING = "utf8";
 
 const app = express();
 
@@ -21,13 +24,13 @@ app.get("/avr/volume", (req, res) => {
     const client = new net.Socket();
 
     client.setTimeout(2000);
-    client.on('timeout', () => {
+    client.on("timeout", () => {
         client.end();
-        res.status(500).send('TELENT SOCKET TIMEOUT');
-    })
+        res.status(500).send("TELENT SOCKET TIMEOUT\n");
+    });
 
     client.on("data", data => {
-        console.log('Response: ' + data.toString());
+        console.log("Response: " + data.toString());
         client.destroy();
 
         res.status(200).send("OK\n");
@@ -41,10 +44,20 @@ app.get("/avr/volume", (req, res) => {
             console.log(`Connected to AVR. Sending '${msg}'...`);
 
             client.write(msg, () => {
-                console.log('Data written');
+                console.log("Data written");
             });
         }
     );
 });
 
-app.listen(PORT, () => console.log(`Initialized. Listening on ${PORT}`));
+const httpsServer = https.createServer(
+    {
+        cert: fs.readFileSync(`${CERT_PATH}/fullchain.pem`, ENCODING),
+        key: fs.readFileSync(`${CERT_PATH}/privkey.pem`, ENCODING)
+    },
+    app
+);
+
+httpsServer.listen(PORT, () =>
+    console.log(`Initialized. Listening on ${PORT}`)
+);
