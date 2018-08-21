@@ -7,17 +7,15 @@ const DEFAULT_VOLUME = 30;
 const app = express();
 
 app.get("/avr/volume", (req, res) => {
-    if (req.query["key"] !== "Key1") {
+    const queryVol = parseInt(req.query["number"]);
+
+    if (req.query["key"] !== "Key1" || !queryVol || queryVol >= 1000) {
         res.status(400).send("BAD REQUEST\n");
         return;
     }
 
-    // console.log(JSON.stringify(req.query, null, 4));
+    const targetVol = queryVol < 10 ? queryVol * 10 : queryVol;
 
-    let targetVol = req.query["number"] || DEFAULT_VOLUME;
-    if (targetVol < 10) {
-        targetVol *= 10;
-    }
     console.log(`Setting avr volume to ${targetVol}`);
 
     const client = new net.Socket();
