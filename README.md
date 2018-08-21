@@ -6,5 +6,5 @@ Make sure you have nodejs and yarn installed.  Then run the following commands
 ```
 yarn
 yarn build
-yarn run
+yarn start
 ```
