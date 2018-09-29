@@ -38,7 +38,7 @@ app.get("/avr/volume", (req, res) => {
 
     client.connect(
         23,
-        "Denon-AVR-S940H.home.lasath.org",
+        "Denon-AVR.home.lasath.org",
         () => {
             const msg = `MV${targetVol}`;
             console.log(`Connected to AVR. Sending '${msg}'...`);
